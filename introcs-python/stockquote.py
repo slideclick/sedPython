@@ -28,7 +28,7 @@ def priceOf(stockSymbol):
     f=open(r'd:\test.txt','wb')#binary mode needn;t encoding argument
     f.write(b)
     f.close
-    print(open(r'd:\test.txt',encoding='latin-1').readlines())
+    print(open(r'd:\test.txt',encoding='gbk').readlines())
     #print(html, file=open(r'd:\test.txt','w',encoding='CP936')) #utf-8 latin-1
     trade = html.find('yfs_l84', 0)
     beg   = html.find('>', trade)
