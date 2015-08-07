@@ -1,7 +1,7 @@
 #-----------------------------------------------------------------------
 # stockquote.py
 #-----------------------------------------------------------------------
-
+from __future__ import print_function
 import sys
 import stdio
 from instream import InStream
@@ -23,6 +23,13 @@ def _readHTML(stockSymbol):
 
 def priceOf(stockSymbol):
     html  = _readHTML(stockSymbol)
+    #print (html.encode('gbk',errors='ignore').decode('gbk'))#
+    b=html.encode('gbk',errors='ignore')
+    f=open(r'd:\test.txt','wb')#binary mode needn;t encoding argument
+    f.write(b)
+    f.close
+    print(open(r'd:\test.txt',encoding='latin-1').readlines())
+    #print(html, file=open(r'd:\test.txt','w',encoding='CP936')) #utf-8 latin-1
     trade = html.find('yfs_l84', 0)
     beg   = html.find('>', trade)
     end   = html.find('</span>', beg)
