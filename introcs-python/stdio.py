@@ -94,8 +94,8 @@ def _readRegExp(regExp):
     global _buffer
     if isEmpty():
         raise EOFError()
-    compiledRegExp = re.compile(r'^\s*' + regExp)
-    match = compiledRegExp.search(_buffer)
+    compiledRegExp = re.compile(r'\s*' + regExp)
+    match = compiledRegExp.match(_buffer)
     if match is None:
         raise ValueError()
     s = match.group()

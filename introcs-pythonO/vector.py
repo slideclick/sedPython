@@ -85,7 +85,6 @@ def main():
     stdio.writeln('|x|      = ' + str(abs(x)))
     stdio.writeln('<x, y>   = ' + str(x.dot(y)))
     stdio.writeln('|x - y|  = ' + str(abs(x - y)))
-    x[1] = 2.0
 
 if __name__ == '__main__':
     main()
