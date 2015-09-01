@@ -765,20 +765,30 @@ one-through-four
 ; expect 3
 (class SimpleClass None
 (begin (defn init (self v)
-(set (attr self v) v))
+(begin (set (attr self n) 0)(set (attr self v) v)))
 (defn getV (self)
 (attr self v))
+(defn getAV (self)
+(/ (attr self v)(attr self n)))
 (defn setV (self d)
 (set (attr self v) d))
+(defn addValue (self d)
+(begin (set (attr self v) (+ ((attr a getV) a) d))
+(set (attr self n) (+ 1 (attr self n) )))
+)
 ))
 (begin
 (define a (SimpleClass))
-((attr a init) a 37)
-((attr a setV) a (add_simon 38 ))
+((attr a init) a 0)
+((attr a setV) a (add_simon -1 ))
 ((attr a getV) a)
-((attr a add_simon) (add_simon 38 ))
+((attr a add_simon) (add_simon 0 ))
+((attr a addValue) a  2 )
+((attr a addValue) a  3 )
+((attr a addValue) a  10 )
+((attr a getAV) a   )
 )
-; expect 39
+; expect 5
 
 (exit)  
   ;; fact code isn't tail , so it can't be optimization
