@@ -177,7 +177,7 @@ class LambdaProcedure:
         self.env = env
 
     def __str__(self):
-        return "(lambda {0} {1})".format(str(self.formals), str(self.body),)
+        return "(lambda {0} {1})".format(str(self.formals), str(self.body),self.env.bindings)#->{2}
         #return "(lambda {0} {1})->{2}".format(str(self.formals), str(self.body),str(self.env),)
 
     def __repr__(self):
