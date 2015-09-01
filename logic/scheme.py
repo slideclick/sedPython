@@ -108,12 +108,20 @@ class Frame:
         self.bindings = {}
         self.parent = parent
 
+    def __str__(self):
+        if self.parent is None:
+            return "<Global Frame>"
+        else:
+            s = sorted('{0}: {1}'.format(k,v) for k,v in self.bindings.items())
+            return "<{{{0}}} >".format(', '.join(s),)
+    
     def __repr__(self):
         if self.parent is None:
             return "<Global Frame>"
         else:
             s = sorted('{0}: {1}'.format(k,v) for k,v in self.bindings.items())
             return "<{{{0}}} -> {1}>".format(', '.join(s), repr(self.parent))
+    __str__ = __repr__
 
     def lookup(self, symbol):
         """Return the value bound to SYMBOL.  Errors if SYMBOL is not found."""
@@ -169,7 +177,8 @@ class LambdaProcedure:
         self.env = env
 
     def __str__(self):
-        return "(lambda {0} {1})".format(str(self.formals), str(self.body))
+        return "(lambda {0} {1})".format(str(self.formals), str(self.body),)
+        #return "(lambda {0} {1})->{2}".format(str(self.formals), str(self.body),str(self.env),)
 
     def __repr__(self):
         args = (self.formals, self.body, self.env)

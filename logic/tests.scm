@@ -762,7 +762,9 @@ one-through-four
 ;; class
 
 (defn add_simon (x) (+ x 1)) (add_simon 2)
-; expect 3
+; expect 3 
+;((attr a setV) a (add_simon -1 ))
+;((attr a add_simon) (add_simon 0 ))
 (class SimpleClass None
 (begin (defn init (self v)
 (begin (set (attr self n) 0)(set (attr self v) v)))
@@ -780,9 +782,9 @@ one-through-four
 (begin
 (define a (SimpleClass))
 ((attr a init) a 0)
-((attr a setV) a (add_simon -1 ))
+
 ((attr a getV) a)
-((attr a add_simon) (add_simon 0 ))
+
 ((attr a addValue) a  2 )
 ((attr a addValue) a  3 )
 ((attr a addValue) a  10 )
