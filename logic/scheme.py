@@ -118,8 +118,10 @@ class Frame:
     def lookup(self, symbol):
         """Return the value bound to SYMBOL.  Errors if SYMBOL is not found."""
         if symbol in self.bindings:
+            #print('found {0}'.format(symbol,))
             return self.bindings[symbol]
         elif self.parent:
+            #print('parent {0}'.format(repr(self.parent),))
             return self.parent.lookup(symbol)
         raise SchemeError("unknown identifier: {0}".format(str(symbol)))
 
@@ -144,7 +146,7 @@ class Frame:
         """
         frame = Frame(self)
         if len(formals) != len(vals):
-            raise SchemeError('wrong length')
+            raise SchemeError('wrong argues length formal:{0} argus:{1}'.format(len(formals),len(vals),))
         for i in range (len(formals)):
             frame.define(formals[i],vals[i])
         return frame
@@ -237,7 +239,7 @@ def do_set_form(vals,env):
 
 def do_class_form(vals,env):
     name, super, body = vals
-    if super == 'None':
+    if str(super).upper() == 'NONE':# DONt  know why None was read into none: esult.append(text.lower())
         super = globalEnv
     classEnv = Frame(parent = super)
     env.define(name, PrimitiveProcedure(lambda : Frame(parent = classEnv)))
@@ -591,3 +593,5 @@ def run(*argv):
     read_eval_print_loop(next_line,globalEnv , startup=True,
                          interactive=interactive, load_files=load_files)
     tscheme_exitonclick()
+
+globalEnv =       create_global_frame()  

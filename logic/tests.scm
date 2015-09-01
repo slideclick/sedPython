@@ -767,12 +767,17 @@ one-through-four
 (begin (defn init (self v)
 (set (attr self v) v))
 (defn getV (self)
-(attr self v))))
+(attr self v))
+(defn setV (self d)
+(set (attr self v) d))
+))
 (begin
 (define a (SimpleClass))
 ((attr a init) a 37)
-((attr a getV) a))
-; expect 37
+((attr a setV) a (add_simon 38 ))
+((attr a getV) a)
+)
+; expect 39
 
 (exit)  
   ;; fact code isn't tail , so it can't be optimization

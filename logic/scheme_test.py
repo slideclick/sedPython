@@ -78,7 +78,9 @@ def run_tests(src_file='tests.scm'):
         def next_line():
             src.current()
             return src
-        read_eval_print_loop(next_line, create_global_frame())
+        global  globalEnv
+        globalEnv =       create_global_frame()  
+        read_eval_print_loop(next_line, globalEnv)
     except BaseException as exc:
         sys.stderr = sys.__stderr__
         if reader:
