@@ -776,6 +776,7 @@ one-through-four
 ((attr a init) a 37)
 ((attr a setV) a (add_simon 38 ))
 ((attr a getV) a)
+((attr a add_simon) (add_simon 38 ))
 )
 ; expect 39
 
