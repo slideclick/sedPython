@@ -107,13 +107,6 @@ class Frame:
         """An empty frame with a PARENT frame (that may be None)."""
         self.bindings = {}
         self.parent = parent
-
-    def __str__(self):
-        if self.parent is None:
-            return "<Global Frame>"
-        else:
-            s = sorted('{0}: {1}'.format(k,v) for k,v in self.bindings.items())
-            return "<{{{0}}} >".format(', '.join(s),)
     
     def __repr__(self):
         #print('__repr__ called ', self.__class__.__name__)
@@ -166,12 +159,12 @@ class Frame:
 
 class UDT(Frame):
     def __init__(self, parent,clsName):
-        self.name_ = clsName
+        self.class_ = clsName
         super().__init__(parent)
     #@trace
     def __repr__(self):
         #print('__repr__: ',self.name_)
-        return '{0}:{1}'.format(self.name_,super().__repr__())
+        return '{0} object:{1}'.format(self.class_,super().__repr__())
     __str__ = __repr__
         
 class LambdaProcedure:
@@ -261,8 +254,8 @@ def do_class_form(vals,env):
     name, super, body = vals
     if str(super).upper() == 'NONE':# DONt  know why None was read into none: esult.append(text.lower())
         super = globalEnv
-    classEnv = UDT(parent = ( env.lookup(super)() if super is not globalEnv else globalEnv) ,clsName= super if super is not globalEnv else 'TheGlobalEnv' )
-    env.define(name, PrimitiveProcedure(lambda : UDT(parent = classEnv,clsName =name)))
+    classEnv = Frame(parent = ( env.lookup(super)() if super is not globalEnv else globalEnv) )#,clsName= super if super is not globalEnv else 'TheGlobalEnv' )
+    env.define(name, PrimitiveProcedure(lambda : Frame(parent = classEnv)))#,clsName =name)))
     scheme_eval(body, classEnv)
     
     
