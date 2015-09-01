@@ -116,6 +116,7 @@ class Frame:
             return "<{{{0}}} >".format(', '.join(s),)
     
     def __repr__(self):
+        #print('__repr__ called ', self.__class__.__name__)
         if self.parent is None:
             return "<Global Frame>"
         else:
@@ -164,9 +165,15 @@ class Frame:
         self.bindings[sym] = val
 
 class UDT(Frame):
-    def __init__(self, parent):
-        return super().__init__(parent)
-    
+    def __init__(self, parent,clsName):
+        self.name_ = clsName
+        super().__init__(parent)
+    #@trace
+    def __repr__(self):
+        #print('__repr__: ',self.name_)
+        return '{0}:{1}'.format(self.name_,super().__repr__())
+    __str__ = __repr__
+        
 class LambdaProcedure:
     """A procedure defined by a lambda expression or the complex define form."""
 
@@ -254,8 +261,8 @@ def do_class_form(vals,env):
     name, super, body = vals
     if str(super).upper() == 'NONE':# DONt  know why None was read into none: esult.append(text.lower())
         super = globalEnv
-    classEnv = UDT(parent = ( env.lookup(super)() if super is not globalEnv else globalEnv)  )
-    env.define(name, PrimitiveProcedure(lambda : UDT(parent = classEnv)))
+    classEnv = UDT(parent = ( env.lookup(super)() if super is not globalEnv else globalEnv) ,clsName= super if super is not globalEnv else 'TheGlobalEnv' )
+    env.define(name, PrimitiveProcedure(lambda : UDT(parent = classEnv,clsName =name)))
     scheme_eval(body, classEnv)
     
     

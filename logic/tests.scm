@@ -766,6 +766,7 @@ one-through-four
  ; expect 3
 
 (begin
+
 (class someclass None (begin (defn new (cls)())))
 (class SimpleClass someclass
 (begin (defn init (self v)
@@ -781,6 +782,7 @@ one-through-four
 (set (attr self n) (+ 1 (attr self n) )))
 )
 ))
+
 (begin
 (define a (SimpleClass))
 ((attr a init) a 0)
@@ -790,6 +792,7 @@ one-through-four
 ((attr a addValue) a  10 )
 ((attr a getAV) a   )
 )
+
 )
  ; expect 5
  (define b (someclass))
