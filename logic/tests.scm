@@ -792,7 +792,7 @@ one-through-four
 )
 )
  ; expect 5
-
+ (define b (someclass))
 (exit)  
   ;; fact code isn't tail , so it can't be optimization
   (define factnew (lambda (n product) (if (<= n 1) product (factnew  (- n 1) (* n  product)))))
