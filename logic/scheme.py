@@ -158,6 +158,15 @@ class Frame:
         self.bindings[sym] = val
 
 class UDT(Frame):
+    def __init__(self, parent):
+        super().__init__(parent)
+    #@trace
+    def __repr__(self):
+        #print('__repr__: ',self.name_)
+        return '{0} CLASS:{1}'.format(self.__class__,super().__repr__())
+    __str__ = __repr__
+
+class INSTANCE(Frame):
     def __init__(self, parent,clsName):
         self.class_ = clsName
         super().__init__(parent)
@@ -254,8 +263,8 @@ def do_class_form(vals,env):
     name, super, body = vals
     if str(super).upper() == 'NONE':# DONt  know why None was read into none: esult.append(text.lower())
         super = globalEnv
-    classEnv = Frame(parent = ( env.lookup(super)() if super is not globalEnv else globalEnv) )#,clsName= super if super is not globalEnv else 'TheGlobalEnv' )
-    env.define(name, PrimitiveProcedure(lambda : Frame(parent = classEnv)))#,clsName =name)))
+    classEnv = UDT(parent = ( env.lookup(super)() if super is not globalEnv else globalEnv) )#,clsName= super if super is not globalEnv else 'TheGlobalEnv' )
+    env.define(name, PrimitiveProcedure(lambda : INSTANCE(parent = classEnv,clsName =name)))
     scheme_eval(body, classEnv)
     
     
