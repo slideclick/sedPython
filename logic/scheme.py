@@ -250,7 +250,7 @@ def do_class_form(vals,env):
     name, super, body = vals
     if str(super).upper() == 'NONE':# DONt  know why None was read into none: esult.append(text.lower())
         super = globalEnv
-    classEnv = Frame(parent = super)
+    classEnv = Frame(parent = ( env.lookup(super)() if super is not globalEnv else globalEnv)  )
     env.define(name, PrimitiveProcedure(lambda : Frame(parent = classEnv)))
     scheme_eval(body, classEnv)
     

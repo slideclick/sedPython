@@ -34,6 +34,9 @@ class PrimitiveProcedure:
     def __str__(self):
         return '#[primitive]'
 
+    def __call__(self):
+        return self.fn()
+
 _PRIMITIVES = []
 
 def primitive(*names):
