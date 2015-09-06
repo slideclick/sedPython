@@ -767,7 +767,8 @@ one-through-four
 
 (begin
 
-(class someclass None (begin (defn new (cls)())))
+(class someclass None (begin (defn getSuper (self)
+(+ 1 (attr self  n)))))
 (class SimpleClass someclass
 (begin (defn init (self v)
 (begin (set (attr self n) 0)(set (attr self v) v)))
@@ -775,6 +776,8 @@ one-through-four
 (attr self v))
 (defn getAV (self)
 (/ (attr self v)(attr self n)))
+(defn getAVUsingSuper (self)
+(/ (attr self v)((attr self getSuper) self)))
 (defn setV (self d)
 (set (attr self v) d))
 (defn addValue (self d)
@@ -791,12 +794,20 @@ one-through-four
 ((attr a addValue) a  3 )
 ((attr a addValue) a  10 )
 ((attr a getAV) a   )
+((attr a getAVUsingSuper) a   )
 )
 
 )
  ; expect 5
  (define b (someclass))
  
+ 
+ ((lambda (y) (((lambda (y) (lambda (x) (* y 2))) 3) 0)) 4)
+ ; expect 6
+ 
+  ((mu (y) (((mu (y) (mu (x) (* y 2))) 3) 0)) 4)
+ ; expect 8
+ (exit) 
   ;; fact code isn't tail , so it can't be optimization
   (define factnew (lambda (n product) (if (<= n 1) product (factnew  (- n 1) (* n  product)))))
   (factnew 1000 1)
@@ -814,4 +825,3 @@ one-through-four
 (sum 1001 0)
 ; expect 501501
 
-(exit) 

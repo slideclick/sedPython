@@ -3,6 +3,12 @@ eval/apply mutual recurrence, environment model, and read-eval-print loop.
 
 TO REMOVE print from code:    ; *print\(.*
 
+>>> env = create_global_frame()
+>>> plus = env.bindings["+"]
+>>> twos = Pair(2, Pair(2, nil))
+>>> apply_primitive(plus, twos, env)
+4
+
 """
 
 from scheme_primitives import *
@@ -76,7 +82,10 @@ def scheme_apply(procedure, args, env):
         frame = env.make_call_frame(procedure.formals, args)
         return scheme_eval(procedure.body, frame)
     else:
-        raise SchemeError("Cannot call {0}".format(str(procedure)))
+        try:
+            procedure(*args)
+        except Exception as e:
+            raise SchemeError("Cannot call {0}".format(str(procedure))) from e
 
 def apply_primitive(procedure, args, env):
     """Apply PrimitiveProcedure PROCEDURE to a Scheme list of ARGS in ENV.
@@ -114,7 +123,7 @@ class Frame:
             return "<Global Frame>"
         else:
             s = sorted('{0}: {1}'.format(k,v) for k,v in self.bindings.items())
-            return "<{{{0}}} ->\n {1}>".format(', '.join(s), repr(self.parent))
+            return "<{{{0}}} -> {1}>".format(', '.join(s), repr(self.parent))
     __str__ = __repr__
 
     def lookup(self, symbol):
@@ -263,8 +272,8 @@ def do_class_form(vals,env):
     name, super, body = vals
     if str(super).upper() == 'NONE':# DONt  know why None was read into none: esult.append(text.lower())
         super = globalEnv
-    classEnv = UDT(parent = ( env.lookup(super)() if super is not globalEnv else globalEnv) )#,clsName= super if super is not globalEnv else 'TheGlobalEnv' )
-    env.define(name, PrimitiveProcedure(lambda : INSTANCE(parent = classEnv,clsName =name)))
+    classEnv = Frame(parent = ( env.lookup(super)() if super is not globalEnv else globalEnv) )#,clsName= super if super is not globalEnv else 'TheGlobalEnv' )
+    env.define(name, PrimitiveProcedure(lambda : Frame(parent = classEnv)))#,clsName =name)))
     scheme_eval(body, classEnv)
     
     
@@ -510,7 +519,7 @@ def scheme_optimized_eval(expr, env):
 ################################################################
 # Uncomment the following line to apply tail call optimization #
 ################################################################
-scheme_eval = scheme_optimized_eval
+#scheme_eval = scheme_optimized_eval
 
 
 ################
