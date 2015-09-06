@@ -5,7 +5,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{72f010a8-5b03-4a97-bc31-44ad008b5841}</ProjectGuid>
     <ProjectHome />
-    <StartupFile>meizi_spider.py</StartupFile>
+    <StartupFile>scheme.py</StartupFile>
     <SearchPath />
     <WorkingDirectory>.</WorkingDirectory>
     <OutputPath>.</OutputPath>

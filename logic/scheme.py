@@ -83,7 +83,7 @@ def scheme_apply(procedure, args, env):
         return scheme_eval(procedure.body, frame)
     else:
         try:
-            procedure(*args)
+            return procedure(*args)
         except Exception as e:
             raise SchemeError("Cannot call {0}".format(str(procedure))) from e
 
@@ -273,9 +273,22 @@ def do_class_form(vals,env):
     if str(super).upper() == 'NONE':# DONt  know why None was read into none: esult.append(text.lower())
         super = globalEnv
     classEnv = Frame(parent = ( env.lookup(super)() if super is not globalEnv else globalEnv) )#,clsName= super if super is not globalEnv else 'TheGlobalEnv' )
-    env.define(name, PrimitiveProcedure(lambda : Frame(parent = classEnv)))#,clsName =name)))
+    env.define(name, MyClass(classEnv))#,clsName =name)))
+    #env.define(name, PrimitiveProcedure(lambda : Frame(parent = classEnv)))#,clsName =name)))
     scheme_eval(body, classEnv)
-    
+
+def CreateClass(parent):
+    def CONSTRACTOR():
+        return Frame(parent = parent)  
+    return  CONSTRACTOR 
+
+class MyClass:
+    def __init__(self,parent):
+        self.parent = parent
+    def __call__(self):
+        return Frame(parent = self.parent)
+
+
     
 def lhsEval(lhs, env):
     (tag, objectExpr, name) = lhs
