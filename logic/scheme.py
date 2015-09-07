@@ -294,7 +294,9 @@ class SchemeClass:
     def __call__(self):
         return Frame(parent = self.parent)
     def __repr__(self):
-        return 'class {0}'.format(self.name,)
+        return 'class: {0}'.format(self.name,)
+    def __str__(self):
+        return 'SchemeClass: {0}'.format(self.name,)
 ############################
 class someclass:
     def getSuper(self):
