@@ -83,7 +83,7 @@ def scheme_apply(procedure, args, env):
         return scheme_eval(procedure.body, frame)
     else:
         try:
-            return procedure(*args)
+            return procedure(*args)#here is for CreateClass __call__
         except Exception as e:
             raise SchemeError("Cannot call {0}".format(str(procedure))) from e
 
@@ -287,7 +287,7 @@ class MyClass:
         self.parent = parent
     def __call__(self):
         return Frame(parent = self.parent)
-
+############################
 class someclass:
     def getSuper(self):
         return 1+ self.n
@@ -305,7 +305,7 @@ a.addValue(2)
 a.addValue(3)
 a.addValue(10)
 (a.getAVUsingSuper() )
-
+######################################
     
 def lhsEval(lhs, env):
     (tag, objectExpr, name) = lhs
