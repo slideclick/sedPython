@@ -77,8 +77,11 @@ def scheme_apply(procedure, args, env):
     """Apply Scheme PROCEDURE to argument values ARGS in environment ENV."""
     if isinstance(procedure, PrimitiveProcedure):
         return apply_primitive(procedure, args, env)
-    elif isinstance(procedure, LambdaProcedure):
+    elif type(procedure) is LambdaProcedure:
         frame = procedure.env.make_call_frame(procedure.formals, args)
+        return scheme_eval(procedure.body, frame)
+    elif isinstance(procedure, BoundMethod):        
+        frame = procedure.env.make_call_frame(procedure.formals, Pair(procedure.instance,args))
         return scheme_eval(procedure.body, frame)
     elif isinstance(procedure, MuProcedure):
         frame = env.make_call_frame(procedure.formals, args)
@@ -89,7 +92,7 @@ def scheme_apply(procedure, args, env):
         except Exception as e:
             raise SchemeError("Cannot SchemeClass  {0}".format(str(procedure))) from e    
     else:
-        raise SchemeError("Cannot call {0}".format(str(procedure))) from e
+        raise SchemeError("Cannot call {0}".format(str(procedure)))
 
 def apply_primitive(procedure, args, env):
     """Apply PrimitiveProcedure PROCEDURE to a Scheme list of ARGS in ENV.
@@ -210,6 +213,12 @@ class LambdaProcedure:
         args = (self.formals, self.body, self.env)
         return "LambdaProcedure({0}, {1}, {2})".format(*(repr(a) for a in args))
 
+class BoundMethod(LambdaProcedure):
+    def __init__(self, formals, body, env,instance):
+        super().__init__( formals, body, env)
+        self.instance= instance
+
+
 class MuProcedure:
     """A procedure defined by a mu expression, which has dynamic scope.
      _________________
@@ -281,7 +290,7 @@ def do_class_form(vals,env):
     #env.define(name, PrimitiveProcedure(lambda : Frame(parent = classEnv)))#,clsName =name)))
     scheme_eval(body, classEnv)
 
-def CreateClass(parent):
+def CreateClass(parent,name=None,super=None):
     def CONSTRACTOR():
         return Frame(parent = parent)  
     return  CONSTRACTOR 
@@ -328,7 +337,13 @@ def do_attr_form(vals,env):
 
 def do_method_form(vals,env):
     objectExpr, name = vals;
-    return scheme_eval(objectExpr, env).lookup(name)
+    function = scheme_eval(objectExpr, env).lookup(name)
+    if isinstance(function,LambdaProcedure):
+        return BoundMethod(function.formals,function.body,function.env , scheme_eval(objectExpr, env))
+    else:
+        return None
+
+
     
 
     

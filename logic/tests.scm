@@ -764,9 +764,12 @@ one-through-four
 (defn add_simon (x) (+ x 1)) 
 (add_simon 2)
  ; expect 3
-
+ ((lambda (y) (((lambda (y) (lambda (x) (* y 2))) 3) 0)) 4)
+ ; expect 6
+ 
+  ((mu (y) (((mu (y) (mu (x) (* y 2))) 3) 0)) 4)
+ ; expect 8
 (begin
-
 (class baseclass None (begin (defn getSuper (self)(+ 1 (attr self  n)))))
 (class SimpleClass baseclass
 (begin (defn init (self v)
@@ -780,11 +783,17 @@ one-through-four
 (defn setV (self d)
 (set (attr self v) d))
 (defn addValue (self d)
-(begin (set (attr self v) (+ ((attr a getV) a) d))
+(begin (set (attr self v) (+ ((attr self getV) self) d))
 (set (attr self n) (+ 1 (attr self n) )))
 )
 ))
-
+(begin
+(define c (SimpleClass))
+((method c init)  0)
+((method c addValue)   2 )
+((method c addValue)   10 )
+((method c getAVUsingSuper)    )
+)
 (begin
 (define a (SimpleClass))
 ((attr a init) a 0)
@@ -795,25 +804,13 @@ one-through-four
 ((attr a getAV) a   )
 ((attr a getAVUsingSuper) a   )
 )
-
-(begin
-(define c (SimpleClass))
-((method a init)  0)
-((method a addValue)   2 )
-((method a addValue)   10 )
-((method a getAV)    )
-)
 )
  ; expect 3.75
  ; 6 getAVUsingSuper will return 4
  (define b (baseclass))
  
  
- ((lambda (y) (((lambda (y) (lambda (x) (* y 2))) 3) 0)) 4)
- ; expect 6
- 
-  ((mu (y) (((mu (y) (mu (x) (* y 2))) 3) 0)) 4)
- ; expect 8
+
  (exit) 
   ;; fact code isn't tail , so it can't be optimization
   (define factnew (lambda (n product) (if (<= n 1) product (factnew  (- n 1) (* n  product)))))
