@@ -275,7 +275,7 @@ def do_class_form(vals,env):
     if str(super).upper() == 'NONE':# DONt  know why None was read into none: esult.append(text.lower())
         super = globalEnv
     classEnv = Frame(parent = ( env.lookup(super)() if super is not globalEnv else globalEnv) )#,clsName= super if super is not globalEnv else 'TheGlobalEnv' )
-    env.define(name, CreateClass(classEnv))#,clsName =name)))
+    env.define(name,lambda:Frame(parent = classEnv)  )#,clsName =name))) CreateClass(classEnv)
     #env.define(name, PrimitiveProcedure(lambda : Frame(parent = classEnv)))#,clsName =name)))
     scheme_eval(body, classEnv)
 
