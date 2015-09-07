@@ -767,8 +767,8 @@ one-through-four
 
 (begin
 
-(class someclass None (begin (defn getSuper (self)(+ 1 (attr self  n)))))
-(class SimpleClass someclass
+(class baseclass None (begin (defn getSuper (self)(+ 1 (attr self  n)))))
+(class SimpleClass baseclass
 (begin (defn init (self v)
 (begin (set (attr self n) 0)(set (attr self v) v)))
 (defn getV (self)
@@ -806,7 +806,7 @@ one-through-four
 )
  ; expect 3.75
  ; 6 getAVUsingSuper will return 4
- (define b (someclass))
+ (define b (baseclass))
  
  
  ((lambda (y) (((lambda (y) (lambda (x) (* y 2))) 3) 0)) 4)
