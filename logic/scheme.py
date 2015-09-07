@@ -57,7 +57,9 @@ def scheme_eval(expr, env):
     elif first == "set":
         return do_set_form(rest,env)      
     elif first == "attr":
-        return do_attr_form(rest,env)         
+        return do_attr_form(rest,env)      
+    elif first == "method":
+        return do_method_form(rest,env)        
     elif first == "define":
         return do_define_form(rest, env)
     elif first == "quote":
@@ -157,7 +159,7 @@ class Frame:
         """
         frame = Frame(self)
         if len(formals) != len(vals):
-            raise SchemeError('wrong argues length formal:{0} argus:{1}'.format(len(formals),len(vals),))
+            raise SchemeError('wrong argues length:: formal:{0} argus:{1}'.format(len(formals),len(vals),))
         for i in range (len(formals)):
             frame.define(formals[i],vals[i])
         return frame
@@ -313,6 +315,10 @@ def lhsEval(lhs, env):
 
 
 def do_attr_form(vals,env):
+    objectExpr, name = vals;
+    return scheme_eval(objectExpr, env).lookup(name)
+
+def do_method_form(vals,env):
     objectExpr, name = vals;
     return scheme_eval(objectExpr, env).lookup(name)
     

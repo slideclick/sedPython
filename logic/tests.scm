@@ -795,8 +795,17 @@ one-through-four
 ((attr a getAV) a   )
 ((attr a getAVUsingSuper) a   )
 )
+
+(begin
+(define c (SimpleClass))
+((method a init)  0)
+((method a addValue)   2 )
+((method a addValue)   10 )
+((method a getAV)    )
+)
 )
  ; expect 3.75
+ ; 6 getAVUsingSuper will return 4
  (define b (someclass))
  
  
