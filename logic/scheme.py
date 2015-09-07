@@ -128,9 +128,9 @@ class Frame:
         #print('__repr__ called ', self.__class__.__name__)
         if self.parent is None:
             return "<Global Frame>"
-        elif isinstance( self.parent,SchemeClass):
-            s = sorted('{0}: {1}'.format(k,v) for k,v in self.bindings.items())
-            return 'instance of {0}: <{{{0}}}>'.format(self.parent,', '.join(s),)
+        #elif isinstance( self.parent,SchemeClass):
+        #    s = sorted('{0}: {1}'.format(k,v) for k,v in self.bindings.items())
+        #    return 'instance of {0}: <{{{0}}}>'.format(self.parent,', '.join(s),)
         else:
             s = sorted('{0}: {1}'.format(k,v) for k,v in self.bindings.items())
             return "<{{{0}}} -> {1}>".format(', '.join(s), repr(self.parent))
@@ -176,14 +176,14 @@ class Frame:
         """Define Scheme symbol SYM to have value VAL in SELF."""
         self.bindings[sym] = val
 
-class UDT(Frame):
-    def __init__(self, parent):
-        super().__init__(parent)
-    #@trace
-    def __repr__(self):
-        #print('__repr__: ',self.name_)
-        return '{0} CLASS:{1}'.format(self.__class__,super().__repr__())
-    __str__ = __repr__
+#class UDT(Frame):
+#    def __init__(self, parent):
+#        super().__init__(parent)
+#    #@trace
+#    def __repr__(self):
+#        #print('__repr__: ',self.name_)
+#        return '{0} CLASS:{1}'.format(self.__class__,super().__repr__())
+#    __str__ = __repr__
 
 class INSTANCE(Frame):
     def __init__(self, parent,clsName):
