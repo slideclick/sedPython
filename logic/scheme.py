@@ -128,6 +128,9 @@ class Frame:
         #print('__repr__ called ', self.__class__.__name__)
         if self.parent is None:
             return "<Global Frame>"
+        elif isinstance( self.parent,SchemeClass):
+            s = sorted('{0}: {1}'.format(k,v) for k,v in self.bindings.items())
+            return 'instance of {0}: <{{{0}}}>'.format(self.parent,', '.join(s),)
         else:
             s = sorted('{0}: {1}'.format(k,v) for k,v in self.bindings.items())
             return "<{{{0}}} -> {1}>".format(', '.join(s), repr(self.parent))
@@ -305,12 +308,12 @@ class SchemeClass:
     def __repr__(self):
         return 'class: {0}'.format(self.name,)
     def __str__(self):
-        return 'SchemeClass: {0}'.format(self.name,)
+        return 'SchemeClass: name: {0},bases: {1}'.format(self.name,self.bases)
 ############################
-class someclass:
+class Tsomeclass:
     def getSuper(self):
         return 1+ self.n
-class SimpleClass(someclass):
+class TSimpleClass(Tsomeclass):
     def __init__(self,v):
         self.n=0
         self.v=v
@@ -319,7 +322,7 @@ class SimpleClass(someclass):
         self.n += 1
     def getAVUsingSuper(self):
         return self.v / self.getSuper()
-a=SimpleClass(0)
+a=TSimpleClass(0)
 a.addValue(2)
 a.addValue(3)
 a.addValue(10)
