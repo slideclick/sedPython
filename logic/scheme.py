@@ -304,7 +304,7 @@ class SchemeClass:
         self.name=name
         self.bases=bases
     def __call__(self):
-        return Frame(parent = self.parent)
+        return INSTANCE(parent = self.parent,clsName = self.name)
     def __repr__(self):
         return 'class: {0}'.format(self.name,)
     def __str__(self):
