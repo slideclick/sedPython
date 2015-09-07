@@ -273,7 +273,7 @@ def do_class_form(vals,env):
     if str(super).upper() == 'NONE':# DONt  know why None was read into none: esult.append(text.lower())
         super = globalEnv
     classEnv = Frame(parent = ( env.lookup(super)() if super is not globalEnv else globalEnv) )#,clsName= super if super is not globalEnv else 'TheGlobalEnv' )
-    env.define(name, MyClass(classEnv))#,clsName =name)))
+    env.define(name, CreateClass(classEnv))#,clsName =name)))
     #env.define(name, PrimitiveProcedure(lambda : Frame(parent = classEnv)))#,clsName =name)))
     scheme_eval(body, classEnv)
 
@@ -288,6 +288,23 @@ class MyClass:
     def __call__(self):
         return Frame(parent = self.parent)
 
+class someclass:
+    def getSuper(self):
+        return 1+ self.n
+class SimpleClass(someclass):
+    def __init__(self,v):
+        self.n=0
+        self.v=v
+    def addValue(self,d):
+        self.v += d
+        self.n += 1
+    def getAVUsingSuper(self):
+        return self.v / self.getSuper()
+a=SimpleClass(0)
+a.addValue(2)
+a.addValue(3)
+a.addValue(10)
+(a.getAVUsingSuper() )
 
     
 def lhsEval(lhs, env):
