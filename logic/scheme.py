@@ -83,11 +83,13 @@ def scheme_apply(procedure, args, env):
     elif isinstance(procedure, MuProcedure):
         frame = env.make_call_frame(procedure.formals, args)
         return scheme_eval(procedure.body, frame)
-    else:
+    elif isinstance(procedure, SchemeClass):
         try:
-            return procedure(*args)#here is for CreateClass __call__
+            return procedure(*args)#here is for SchemeClass __call__
         except Exception as e:
-            raise SchemeError("Cannot call {0}".format(str(procedure))) from e
+            raise SchemeError("Cannot SchemeClass  {0}".format(str(procedure))) from e    
+    else:
+        raise SchemeError("Cannot call {0}".format(str(procedure))) from e
 
 def apply_primitive(procedure, args, env):
     """Apply PrimitiveProcedure PROCEDURE to a Scheme list of ARGS in ENV.
