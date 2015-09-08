@@ -306,11 +306,19 @@ class SchemeType:
         self.name=name
         self.bases=bases
     def Construct(self,*paras):
+        '''class type(object):
+            def __call__(self, *args, **kwargs):
+                # should do the same thing as type.__call__
+                obj = self.__new__(self, *args, **kwargs)
+                if isinstance(obj, self):
+                    obj.__init__(*args, **kwargs)
+                return obj
+        '''
+
         insance =          INSTANCE(self.Type,clsName = self.name,                        )
         if '_init_' in insance._Type_.bindings             and insance._class_ ==  self.name:#
             procedure =  insance._Type_.lookup('_init_')
-            args = list(paras)
-            args.insert(0,insance)
+            args = list(paras);            args.insert(0,insance)
             frame = procedure.env.make_call_frame(procedure.formals, args)
             scheme_eval(procedure.body, frame)            
         return insance

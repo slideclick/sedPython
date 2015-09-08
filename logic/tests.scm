@@ -826,7 +826,7 @@ one-through-four
 )
 ))
  (begin
-(define d (UsingInit 2))
+(define d (UsingInit (+ 1 1)))
 ((method d addValue)   2 )
 ((method d addValue)   10 )
 ((attr d getAV) d   )
