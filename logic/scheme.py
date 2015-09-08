@@ -86,11 +86,11 @@ def scheme_apply(procedure, args, env):
     elif isinstance(procedure, MuProcedure):
         frame = env.make_call_frame(procedure.formals, args)
         return scheme_eval(procedure.body, frame)
-    elif isinstance(procedure, SchemeClass):
+    elif isinstance(procedure, SchemeType):
         try:
-            return procedure(*args)#here is for SchemeClass __call__
+            return procedure.Construct(*args)#here is for SchemeClass __call__
         except Exception as e:
-            raise SchemeError("Cannot SchemeClass  {0}".format(str(procedure))) from e    
+            raise Exception("Cannot SchemeType  {0}".format(str(procedure))) from e    
     else:
         raise SchemeError("Cannot call {0}".format(str(procedure)))
 
@@ -289,7 +289,7 @@ def do_class_form(vals,env):
     if str(super).upper() == 'NONE':# DONt  know why None was read into none: esult.append(text.lower())
         super = globalEnv
     classEnv = Frame(parent = ( env.lookup(super)() if super is not globalEnv else globalEnv) )#,clsName= super if super is not globalEnv else 'TheGlobalEnv' )
-    env.define(name, SchemeClass(classEnv,name,super)  )#,clsName =name))) MyClass(classEnv) lambda:Frame(parent = classEnv)
+    env.define(name, SchemeType(classEnv,name,super)  )#,clsName =name))) MyClass(classEnv) lambda:Frame(parent = classEnv)
     #env.define(name, PrimitiveProcedure(lambda : Frame(parent = classEnv)))#,clsName =name)))
     scheme_eval(body, classEnv)
 
@@ -298,7 +298,7 @@ def CreateClass(parent,name=None,super=None):
         return Frame(parent = parent)  
     return  CONSTRACTOR 
 
-class SchemeClass:
+class SchemeType:
     def __init__(self,parent,name,bases):
         self.parent = parent
         self.name=name
@@ -308,7 +308,7 @@ class SchemeClass:
     def __repr__(self):
         return 'class: {0}'.format(self.name,)
     def __str__(self):
-        return 'SchemeClass: name: {0},bases: {1}'.format(self.name,self.bases)
+        return 'SchemeType: name: {0},bases: {1}'.format(self.name,self.bases)
 ############################
 class Tsomeclass:
     def getSuper(self):
@@ -606,7 +606,7 @@ def read_eval_print_loop(next_line, env, quiet=False, startup=False,
             if (isinstance(err, RuntimeError) and
                 'maximum recursion depth exceeded' not in err.args[0]):
                 raise
-            print("Error:", err)
+            print("Error:", err);#raise
         except KeyboardInterrupt:  # <Control>-C
             if not startup:
                 raise
