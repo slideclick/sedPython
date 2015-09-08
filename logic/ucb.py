@@ -1,3 +1,4 @@
+# -*- coding: UTF-8 -*-
 """The ucb module contains functions specific to 61A at UC Berkeley."""
 
 import code

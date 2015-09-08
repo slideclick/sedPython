@@ -808,7 +808,30 @@ one-through-four
 )
 
  ; expect 3.75
-
+(class UsingInit baseclass
+(begin (defn _init_ (self v)
+(begin (set (attr self n)(+ 0 1))(set (attr self v) v)))
+(defn getV (self)
+(attr self v))
+(defn getAV (self)
+(/ (attr self v)(attr self n)))
+(defn getAVUsingSuper (self)
+(/ (attr self v)((attr self getSuper) self)))
+(defn setV (self d)
+(set (attr self v) d))
+(defn addValue (self d)
+(begin (set (attr self v) (+ ((attr self getV) self) d))
+(set (attr self n) (+ 1 (attr self n) )))
+)
+))
+ (begin
+(define d (UsingInit 2))
+((method d addValue)   2 )
+((method d addValue)   10 )
+((attr d getAV) d   )
+((attr d getAVUsingSuper) d   )
+)
+  ; expect 3.5
  (define b (baseclass))
  
  

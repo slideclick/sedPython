@@ -1,3 +1,4 @@
+# -*- coding: UTF-8 -*-
 """This module implements the core Scheme interpreter functions, including the
 eval/apply mutual recurrence, environment model, and read-eval-print loop.
 
@@ -186,13 +187,14 @@ class Frame:
 #    __str__ = __repr__
 
 class INSTANCE(Frame):
-    def __init__(self, parent,clsName):
-        self.class_ = clsName
-        super().__init__(parent)
+    def __init__(self, Type,clsName):
+        self._class_ = clsName
+        self._Type_= Type
+        super().__init__(Type)
     #@trace
     def __repr__(self):
         #print('__repr__: ',self.name_)
-        return '{0} object:{1}'.format(self.class_,super().__repr__())
+        return '{0} object:{1}'.format(self._class_,super().__repr__())
     __str__ = __repr__
         
 class LambdaProcedure:
@@ -288,7 +290,7 @@ def do_class_form(vals,env):
     name, super, body = vals
     if str(super).upper() == 'NONE':# DONt  know why None was read into none: esult.append(text.lower())
         super = globalEnv
-    classEnv = Frame(parent = ( env.lookup(super)() if super is not globalEnv else globalEnv) )#,clsName= super if super is not globalEnv else 'TheGlobalEnv' )
+    classEnv = Frame(parent = ( env.lookup(super).Construct() if super is not globalEnv else globalEnv) )#,clsName= super if super is not globalEnv else 'TheGlobalEnv' )
     env.define(name, SchemeType(classEnv,name,super)  )#,clsName =name))) MyClass(classEnv) lambda:Frame(parent = classEnv)
     #env.define(name, PrimitiveProcedure(lambda : Frame(parent = classEnv)))#,clsName =name)))
     scheme_eval(body, classEnv)
@@ -299,16 +301,25 @@ def CreateClass(parent,name=None,super=None):
     return  CONSTRACTOR 
 
 class SchemeType:
-    def __init__(self,parent,name,bases):
-        self.parent = parent
+    def __init__(self,Type,name,bases):
+        self.Type = Type
         self.name=name
         self.bases=bases
-    def __call__(self):
-        return INSTANCE(parent = self.parent,clsName = self.name)
+    def Construct(self,*paras):
+        insance =          INSTANCE(self.Type,clsName = self.name,                        )
+        #if len(paras) == 0:        return i#wrong : may be it has a init with no parameters.
+        if '_init_' in insance._Type_.bindings             and insance._class_ ==  self.name:#
+            procedure =  insance._Type_.lookup('_init_')
+            args = list(paras)
+            args.insert(0,insance)
+            frame = procedure.env.make_call_frame(procedure.formals, args)
+            scheme_eval(procedure.body, frame)            
+        return insance
+
     def __repr__(self):
         return 'class: {0}'.format(self.name,)
     def __str__(self):
-        return 'SchemeType: name: {0},bases: {1}'.format(self.name,self.bases)
+        return 'SchemeType:{0},bases: {1}'.format(self.name,self.bases)
 ############################
 class Tsomeclass:
     def getSuper(self):
