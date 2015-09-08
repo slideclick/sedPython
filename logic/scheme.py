@@ -291,7 +291,7 @@ def do_class_form(vals,env):
     if str(super).upper() == 'NONE':# DONt  know why None was read into none: esult.append(text.lower())
         super = globalEnv
     classEnv = Frame(parent = ( env.lookup(super).Construct() if super is not globalEnv else globalEnv) )#,clsName= super if super is not globalEnv else 'TheGlobalEnv' )
-    env.define(name, SchemeType(classEnv,name,super)  )#,clsName =name))) MyClass(classEnv) lambda:Frame(parent = classEnv)
+    env.define(name, SchemeType(class_dict =classEnv,class_name=name,class_parents=super)  )#,clsName =name))) MyClass(classEnv) lambda:Frame(parent = classEnv)
     #env.define(name, PrimitiveProcedure(lambda : Frame(parent = classEnv)))#,clsName =name)))
     scheme_eval(body, classEnv)
 
@@ -301,11 +301,11 @@ def CreateClass(parent,name=None,super=None):
     return  CONSTRACTOR 
 
 class SchemeType:
-    def __init__(self,Type,name,bases):
-        self.Type = Type
-        self.name=name
-        self.bases=bases
-    def Construct(self,*paras):
+    def __init__(self,class_dict,class_name,class_parents):
+        self.Type = class_dict
+        self.name=class_name
+        self.bases=class_parents
+    def Construct(self,*paras):# a=A()
         '''class type(object):
             def __call__(self, *args, **kwargs):
                 # should do the same thing as type.__call__
