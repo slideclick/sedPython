@@ -771,6 +771,7 @@ one-through-four
  ; expect 8
 (begin
 (class baseclass None (begin (defn getSuper (self)(+ 1 (attr self  n)))))
+ (define b (baseclass))
 (class SimpleClass baseclass
 (begin (defn init (self v)
 (begin (set (attr self n) 0)(set (attr self v) v)))
@@ -832,7 +833,7 @@ one-through-four
 ((attr d getAVUsingSuper) d   )
 )
   ; expect 3.5
- (define b (baseclass))
+
  
  
 

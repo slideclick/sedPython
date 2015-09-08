@@ -194,7 +194,7 @@ class INSTANCE(Frame):
     #@trace
     def __repr__(self):
         #print('__repr__: ',self.name_)
-        return '{0} object:{1}'.format(self._class_,super().__repr__())
+        return '{0} object:{1}'.format(self._class_,self._Type_,) #super().__repr__())
     __str__ = __repr__
         
 class LambdaProcedure:
@@ -307,7 +307,6 @@ class SchemeType:
         self.bases=bases
     def Construct(self,*paras):
         insance =          INSTANCE(self.Type,clsName = self.name,                        )
-        #if len(paras) == 0:        return i#wrong : may be it has a init with no parameters.
         if '_init_' in insance._Type_.bindings             and insance._class_ ==  self.name:#
             procedure =  insance._Type_.lookup('_init_')
             args = list(paras)
