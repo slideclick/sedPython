@@ -34,7 +34,7 @@ def log(message):
     if type(message) is not str:
         message = str(message)
     print(PREFIX + re.sub('\n', '\n' + PREFIX, message))
-SIZE = 4
+SIZE = 2
 
 # Queen
 #
@@ -48,7 +48,7 @@ class Queen:
   def __repr__(self):
     return ('column: {0}, row: {1}, neighbour: <{2}>'.format(self.column,self.row,self.neighbour,))
   def __init__(self,):
-    self.row = 0
+    self.row = 1
   def initialColumn(self,column, neighbour):
     self.column = column
     self.neighbour = neighbour
@@ -83,7 +83,7 @@ class Queen:
     return True
   
 
-  # first?
+  # findSolution?
   #
   # set up an initial acceptable position for this queen and neighbours.
   # return True if it's possible to set up, False if not.
@@ -129,6 +129,7 @@ class Queen:
 # a class of queen used to indicate the end of the set of queens
 
 class NullQueen :
+  
 
   def canAttack(self,row, column):
     return False
@@ -147,6 +148,18 @@ class NullQueen :
   
   def __repr__(self):
     return ('NullQueen'.format())
+  __str__ = __repr__
+
+
+def PrintArray(lastQueen,firstcall = False,size = SIZE):
+    if firstcall:
+        [print(i,end='') for i  in range(1,SIZE+1)]
+    if type(lastQueen.neighbour) is not NullQueen:
+        PrintArray(lastQueen.neighbour)
+    print()
+    for i in range(1,size+1):
+        print('{0}'.format('O' if lastQueen.row == i else 'X' ,),end='')
+    
 
 
 # the program
@@ -156,14 +169,18 @@ lastQueen = None
 
 for i in range(1,SIZE+1):
   lastQueen = Queen()
-  #print('neighbour: ',neighbour)
   lastQueen.initialColumn(i, neighbour)
   neighbour = lastQueen
-  #print('adding queue: ',lastQueen,'\n')
-#print('\nlastQueen:',lastQueen)
+
+
+PrintArray(lastQueen,True)
+print()
 
 if lastQueen.findSolution():
     print('\nfound:',lastQueen)
-    for state in lastQueen.getState():
+
+    PrintArray(lastQueen,True)
+    print()
+    for state in lastQueen.getState():        
         print( "column: {1} row: {0} ".format(state[0],state[1],))
 
