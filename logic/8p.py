@@ -76,7 +76,7 @@ class Queen:
   # see if this queen's current position can ba attacked.  return True
   # if it's a safe position, or try and the next position and test it.
   # return False if we're at wit's end
-  @trace
+  #@trace
   def testOrAdvance(self,):
     if self.neighbour.canAttack(self.row, self.column):
       return self.next()
@@ -87,10 +87,10 @@ class Queen:
   #
   # set up an initial acceptable position for this queen and neighbours.
   # return True if it's possible to set up, False if not.
-  @trace
-  def first(self,):
+  #@trace
+  def findSolution(self,):
     self.row = 1
-    if self.neighbour.first():
+    if self.neighbour.findSolution():
       return self.testOrAdvance()
     return False
   
@@ -134,7 +134,7 @@ class NullQueen :
     return False
   
 
-  def first(self,):
+  def findSolution(self,):
     return True
   
 
@@ -162,8 +162,8 @@ for i in range(1,SIZE+1):
   #print('adding queue: ',lastQueen,'\n')
 #print('\nlastQueen:',lastQueen)
 
-if lastQueen.first():
+if lastQueen.findSolution():
     print('\nfound:',lastQueen)
     for state in lastQueen.getState():
-        print( "row: {0} column: {1}".format(state[0],state[1],))
+        print( "column: {1} row: {0} ".format(state[0],state[1],))
 
