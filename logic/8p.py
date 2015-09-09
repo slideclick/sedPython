@@ -77,7 +77,7 @@ class Queen:
   # see if this queen's current position can ba attacked.  return True
   # if it's a safe position, or try and the next position and test it.
   # return False if we're at wit's end
-  #@trace
+  @trace
   def testOrAdvance(self,):
     if self.neighbour.canAttack(self.row, self.column):
       return self.next()
@@ -87,7 +87,7 @@ class Queen:
   #
   # set up an initial acceptable position for this queen and neighbours.
   # return True if it's possible to set up, False if not.
-  #@trace
+  @trace
   def findSolution(self,):
     if self.neighbour.findSolution():
       return self.testOrAdvance()
@@ -99,12 +99,13 @@ class Queen:
   # possible or False if not
 
   def next(self,):
+    print('before move:\n');PrintArray(lastQueen,True);print()
     if self.row == SIZE:
       if not  self.neighbour.next():
         return False 
       self.row = 0
     self.row += 1
-    print();PrintArray(lastQueen,True);print()
+    print('after move:\n');PrintArray(lastQueen,True);print()
     return self.testOrAdvance()  
 
   # getState
