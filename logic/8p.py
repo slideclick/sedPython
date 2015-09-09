@@ -35,14 +35,14 @@ def log(message):
         message = str(message)
     print(PREFIX + re.sub('\n', '\n' + PREFIX, message))
 SIZE = 4
-def PrintArray(lastQueen,firstcall = False,size = SIZE):
+def PrintArray(lastQueen,firstcall = False,moveNumber=0):
     if firstcall:
         [print(i,end='') for i  in range(1,SIZE+1)]
     if type(lastQueen.neighbour) is not NullQueen:
         PrintArray(lastQueen.neighbour)
     print()
-    for i in range(1,size+1):
-        print('{0}'.format( chr(ord('J')+lastQueen.column) if lastQueen.row == i else 'O' ,),end='')
+    for i in range(1,SIZE+1):
+        print('{0}'.format( chr(ord('F')+lastQueen.column) if lastQueen.row == i else 'O' ,),end='')
     print(lastQueen.column,end='')
 # Queen
 class Queen:
@@ -102,13 +102,13 @@ class Queen:
   # possible or False if not
 
   def next(self,):
-    print('before move:\n');PrintArray(lastQueen,True);print()
+    #print('before move:');PrintArray(lastQueen,True);print()
     if self.row == SIZE:
       if not  self.neighbour.next():
         return False 
       self.row = 0
     self.row += 1
-    print('after move:\n');PrintArray(lastQueen,True);print()
+    print();print('after move: {0}'.format(self.column));PrintArray(lastQueen,True);print()
     return self.testOrAdvance()  
 
   # getState
@@ -154,17 +154,17 @@ for i in range(1,SIZE+1):
   lastQueen = Queen()
   lastQueen.initialColumn(i, neighbour)
   neighbour = lastQueen
-  #if not lastQueen.findSolution():
-  #    pass
+  if not lastQueen.findSolution():
+      print('no solution\n')
 
 print();print();PrintArray(lastQueen,True);print()
 
 
-if lastQueen.findSolution():
-    print('\nfound:',lastQueen)
-    PrintArray(lastQueen,True);    print()
-    for state in lastQueen.getState():        
-        print( "column: {1} row: {0} ".format(state[0],state[1],))
+#if lastQueen.findSolution():
+#    print('\nfound:',lastQueen)
+#    PrintArray(lastQueen,True);    print()
+#    for state in lastQueen.getState():        
+#        print( "column: {1} row: {0} ".format(state[0],state[1],))
 #lastQueen.row += 1
 #if lastQueen.findSolution():
 #    print('\nfound:',lastQueen)

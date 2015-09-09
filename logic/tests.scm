@@ -745,6 +745,8 @@ one-through-four
 ; expect 4
 
 ; simon
+ ;;(require racket/trace)
+;; (trace fact)
  (define fact (lambda (n) (if (<= n 1) 1 (* n (fact (- n 1))))))
  (fact 10)
  ; expect 3628800
@@ -839,6 +841,7 @@ one-through-four
 
  (exit) 
   ;; fact code isn't tail , so it can't be optimization
+  ;; (require racket/trace) (trace factnew)
   (define factnew (lambda (n product) (if (<= n 1) product (factnew  (- n 1) (* n  product)))))
   (factnew 1000 1)
   ; expect 3628800
