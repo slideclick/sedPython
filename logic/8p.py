@@ -128,7 +128,7 @@ class Queen:
 #
 # a class of queen used to indicate the end of the set of queens
 
-class NullQueen ( Queen):
+class NullQueen :
 
   def canAttack(self,row, column):
     return False
