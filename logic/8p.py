@@ -162,9 +162,9 @@ if lastQueen.findSolution():
     PrintArray(lastQueen,True);    print()
     for state in lastQueen.getState():        
         print( "column: {1} row: {0} ".format(state[0],state[1],))
-lastQueen.row += 1
-if lastQueen.findSolution():
-    print('\nfound:',lastQueen)
-    PrintArray(lastQueen,True);    print()
-    for state in lastQueen.getState():        
-        print( "column: {1} row: {0} ".format(state[0],state[1],))
+#lastQueen.row += 1
+#if lastQueen.findSolution():
+#    print('\nfound:',lastQueen)
+#    PrintArray(lastQueen,True);    print()
+#    for state in lastQueen.getState():        
+#        print( "column: {1} row: {0} ".format(state[0],state[1],))
