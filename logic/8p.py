@@ -150,12 +150,14 @@ for i in range(1,SIZE+1):
   lastQueen = Queen()
   lastQueen.initialColumn(i, neighbour)
   neighbour = lastQueen
+  #if not lastQueen.findSolution():
+  #    pass
 
-PrintArray(lastQueen,True);print()
+print();print();PrintArray(lastQueen,True);print()
+
 
 if lastQueen.findSolution():
     print('\nfound:',lastQueen)
     PrintArray(lastQueen,True);    print()
     for state in lastQueen.getState():        
         print( "column: {1} row: {0} ".format(state[0],state[1],))
-
