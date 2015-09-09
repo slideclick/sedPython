@@ -34,7 +34,7 @@ def log(message):
     if type(message) is not str:
         message = str(message)
     print(PREFIX + re.sub('\n', '\n' + PREFIX, message))
-SIZE = 4
+SIZE = 8
 def PrintArray(lastQueen,firstcall = False,size = SIZE):
     if firstcall:
         [print(i,end='') for i  in range(1,SIZE+1)]
@@ -157,6 +157,12 @@ for i in range(1,SIZE+1):
 print();print();PrintArray(lastQueen,True);print()
 
 
+if lastQueen.findSolution():
+    print('\nfound:',lastQueen)
+    PrintArray(lastQueen,True);    print()
+    for state in lastQueen.getState():        
+        print( "column: {1} row: {0} ".format(state[0],state[1],))
+lastQueen.row += 1
 if lastQueen.findSolution():
     print('\nfound:',lastQueen)
     PrintArray(lastQueen,True);    print()
