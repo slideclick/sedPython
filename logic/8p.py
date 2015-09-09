@@ -44,22 +44,17 @@ def PrintArray(lastQueen,firstcall = False,size = SIZE):
     for i in range(1,size+1):
         print('{0}'.format('X' if lastQueen.row == i else 'O' ,),end='')
 # Queen
-#
-# the class which does most of the work
-
 class Queen:
 
-  # initialColumn
-  #
-  # initialise the column and neighbour values
   def __repr__(self):
     return ('column: {0}, row: {1}, neighbour: <{2}>'.format(self.column,self.row,self.neighbour,))
+
   def __init__(self,):
     self.row = 1
+
   def initialColumn(self,column, neighbour):
     self.column = column
     self.neighbour = neighbour
-
 
   # canAttack?
   #
@@ -75,8 +70,7 @@ class Queen:
     if cd == rd:
       return True 
 
-    return self.neighbour.canAttack(row, column)
-  
+    return self.neighbour.canAttack(row, column)  
 
   # testOrAdvance?
   #
@@ -87,8 +81,7 @@ class Queen:
   def testOrAdvance(self,):
     if self.neighbour.canAttack(self.row, self.column):
       return self.next()
-    return True
-  
+    return True  
 
   # findSolution?
   #
@@ -96,11 +89,9 @@ class Queen:
   # return True if it's possible to set up, False if not.
   #@trace
   def findSolution(self,):
-    self.row = 1
     if self.neighbour.findSolution():
       return self.testOrAdvance()
-    return False
-  
+    return False  
 
   # next?
   #
@@ -112,12 +103,9 @@ class Queen:
       if not  self.neighbour.next():
         return False 
       self.row = 0
-    
-
     self.row += 1
     print();PrintArray(lastQueen,True);print()
-    return self.testOrAdvance()
-  
+    return self.testOrAdvance()  
 
   # getState
   #
@@ -127,39 +115,30 @@ class Queen:
   def getState(self,):
     stateArray = self.neighbour.getState()
     stateArray.append([self.row, self.column])
-    return stateArray
-  
+    return stateArray  
 
 
 # NullQueen
 #
 # a class of queen used to indicate the end of the set of queens
-
-class NullQueen :
-  
+class NullQueen : 
 
   def canAttack(self,row, column):
-    return False
-  
+    return False  
 
   def findSolution(self,):
-    return True
-  
+    return True  
 
   def next(self,):
-    return False
-  
+    return False  
   #@trace
   def getState(self,):
     return []
   
   def __repr__(self):
     return ('NullQueen'.format())
+
   __str__ = __repr__
-
-
-
-    
 
 
 # the program
@@ -172,15 +151,11 @@ for i in range(1,SIZE+1):
   lastQueen.initialColumn(i, neighbour)
   neighbour = lastQueen
 
-
-PrintArray(lastQueen,True)
-print()
+PrintArray(lastQueen,True);print()
 
 if lastQueen.findSolution():
     print('\nfound:',lastQueen)
-
-    PrintArray(lastQueen,True)
-    print()
+    PrintArray(lastQueen,True);    print()
     for state in lastQueen.getState():        
         print( "column: {1} row: {0} ".format(state[0],state[1],))
 
