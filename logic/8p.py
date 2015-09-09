@@ -34,7 +34,7 @@ def log(message):
     if type(message) is not str:
         message = str(message)
     print(PREFIX + re.sub('\n', '\n' + PREFIX, message))
-SIZE = 8
+SIZE = 4
 def PrintArray(lastQueen,firstcall = False,size = SIZE):
     if firstcall:
         [print(i,end='') for i  in range(1,SIZE+1)]
@@ -42,12 +42,15 @@ def PrintArray(lastQueen,firstcall = False,size = SIZE):
         PrintArray(lastQueen.neighbour)
     print()
     for i in range(1,size+1):
-        print('{0}'.format('X' if lastQueen.row == i else 'O' ,),end='')
+        print('{0}'.format( chr(ord('J')+lastQueen.column) if lastQueen.row == i else 'O' ,),end='')
+    print(lastQueen.column,end='')
 # Queen
 class Queen:
 
   def __repr__(self):
     return ('column: {0}, row: {1}, neighbour: <{2}>'.format(self.column,self.row,self.neighbour,))
+
+  __str__ = __repr__
 
   def __init__(self,):
     self.row = 1
@@ -77,7 +80,7 @@ class Queen:
   # see if this queen's current position can ba attacked.  return True
   # if it's a safe position, or try and the next position and test it.
   # return False if we're at wit's end
-  @trace
+  #@trace
   def testOrAdvance(self,):
     if self.neighbour.canAttack(self.row, self.column):
       return self.next()
@@ -87,7 +90,7 @@ class Queen:
   #
   # set up an initial acceptable position for this queen and neighbours.
   # return True if it's possible to set up, False if not.
-  @trace
+  #@trace
   def findSolution(self,):
     if self.neighbour.findSolution():
       return self.testOrAdvance()
