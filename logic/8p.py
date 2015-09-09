@@ -34,8 +34,15 @@ def log(message):
     if type(message) is not str:
         message = str(message)
     print(PREFIX + re.sub('\n', '\n' + PREFIX, message))
-SIZE = 2
-
+SIZE = 4
+def PrintArray(lastQueen,firstcall = False,size = SIZE):
+    if firstcall:
+        [print(i,end='') for i  in range(1,SIZE+1)]
+    if type(lastQueen.neighbour) is not NullQueen:
+        PrintArray(lastQueen.neighbour)
+    print()
+    for i in range(1,size+1):
+        print('{0}'.format('X' if lastQueen.row == i else 'O' ,),end='')
 # Queen
 #
 # the class which does most of the work
@@ -108,7 +115,7 @@ class Queen:
     
 
     self.row += 1
-
+    print();PrintArray(lastQueen,True);print()
     return self.testOrAdvance()
   
 
@@ -151,14 +158,7 @@ class NullQueen :
   __str__ = __repr__
 
 
-def PrintArray(lastQueen,firstcall = False,size = SIZE):
-    if firstcall:
-        [print(i,end='') for i  in range(1,SIZE+1)]
-    if type(lastQueen.neighbour) is not NullQueen:
-        PrintArray(lastQueen.neighbour)
-    print()
-    for i in range(1,size+1):
-        print('{0}'.format('O' if lastQueen.row == i else 'X' ,),end='')
+
     
 
 
