@@ -4,7 +4,7 @@ import math
 import operator
 import sys
 from scheme_reader import Pair, nil
-
+import scheme_tokens
 try:
     import turtle
 except:
@@ -155,7 +155,7 @@ def scheme_symbolp(x):
 
 @primitive("number?")
 def scheme_numberp(x):
-    return isinstance(x, int) or isinstance(x, float)
+    return isinstance(x, int) or isinstance(x, float) or isinstance(x, scheme_tokens.Number)
 
 @primitive("integer?")
 def scheme_integerp(x):

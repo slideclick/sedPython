@@ -34,7 +34,7 @@ def log(message):
     if type(message) is not str:
         message = str(message)
     print(PREFIX + re.sub('\n', '\n' + PREFIX, message))
-SIZE = 4
+SIZE = 2
 def PrintArray(lastQueen,firstcall = False,moveNumber=0):
     if firstcall:
         [print(i,end='') for i  in range(1,SIZE+1)]

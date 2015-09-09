@@ -16,6 +16,19 @@ import itertools
 import string
 import sys
 import tokenize
+class Number(object):
+    """ 
+    """
+    def __init__(self, value):
+        self.value = value
+
+    def reducible(self):
+        return False
+
+    def __repr__(self):
+        return '<'+ repr(self.value) +'>'     
+        
+    __str__ = __repr__
 
 _NUMERAL_STARTS = set(string.digits) | set('+-.')
 _SYMBOL_CHARS = (set('!$%&*/:<=>?@^_~') | set(string.ascii_lowercase) |
@@ -88,7 +101,7 @@ def tokenize_line(line):
             number = False
             if text[0] in _NUMERAL_STARTS:
                 try:
-                    result.append(int(text))
+                    result.append(Number(int(text)))
                     number = True
                 except ValueError:
                     try:
