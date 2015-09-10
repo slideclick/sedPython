@@ -128,7 +128,7 @@ class Frame:
     def __repr__(self):
         #print('__repr__ called ', self.__class__.__name__)
         if self.parent is None:
-            return "<Global Frame>"
+            return "<Global Frame>:{0}".format([x for x in self.bindings.keys()if isinstance(self.bindings[x],LambdaProcedure) ])#if isinstance(x,LambdaProcedure)
         #elif isinstance( self.parent,SchemeClass):
         #    s = sorted('{0}: {1}'.format(k,v) for k,v in self.bindings.items())
         #    return 'instance of {0}: <{{{0}}}>'.format(self.parent,', '.join(s),)
@@ -139,6 +139,10 @@ class Frame:
 
     def lookup(self, symbol):
         """Return the value bound to SYMBOL.  Errors if SYMBOL is not found."""
+        if symbol == 'addd':
+            pass
+        if symbol == 'add_simon':
+            pass
         if symbol in self.bindings:
             #print('found {0}'.format(symbol,))
             return self.bindings[symbol]

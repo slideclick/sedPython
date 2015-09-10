@@ -780,7 +780,7 @@ one-through-four
  ; expect 8
   (defn addd (x y ) (+ 2 x y ))
 (begin
-(class baseclass None (begin (defn getSuper (self)(+ 1 (attr self  n)))(defn addd (x y ) (+ 1 x y ))))
+(class baseclass None (begin (defn getSuper (self)(+ 1 (attr self  n)))(defn addd (x y ) (+ 0 x y ))))
  (define b (baseclass))
 (class SimpleClass baseclass
 (begin (defn init (self v)
@@ -805,7 +805,7 @@ one-through-four
 ((method c addValue)   10 )
 ((method c getAVUsingSuper)    )
 ))
- ; expect 2.4
+ ; expect 4
 ;getAVUsingSuper will return 4
 (begin
 (define a (SimpleClass))
@@ -867,7 +867,7 @@ one-through-four
 ((method d getAV)    )
 ((method d getAVUsingSuper)   )
 )
-  ; expect 1.75
+  ; expect 2.3333333333333335
  
  (defn add_simon (x) (+ x 1)) (add_simon 2)
 ; expect 3
