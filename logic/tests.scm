@@ -775,7 +775,7 @@ one-through-four
   ((mu (y) (((mu (y) (mu (x) (* y 2))) 3) 0)) 4)
  ; expect 8
 (begin
-(class baseclass None (begin (defn getSuper (self)(+ 1 (attr self  n)))))
+(class baseclass None (begin (defn getSuper (self)(+ 1 (attr self  n)))(defn addd (x y ) (+ 1 x y ))))
  (define b (baseclass))
 (class SimpleClass baseclass
 (begin (defn init (self v)
@@ -790,7 +790,7 @@ one-through-four
 (set (attr self v) d))
 (defn addValue (self d)
 (begin (set (attr self v) (+ ((attr self getV) self) d))
-(set (attr self n) (+ 1 (attr self n) )))
+(set (attr self n) (addd 1 (attr self n) )))
 )
 ))
 (begin

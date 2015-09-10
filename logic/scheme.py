@@ -624,7 +624,7 @@ def read_eval_print_loop(next_line, env, quiet=False, startup=False,
             if (isinstance(err, RuntimeError) and
                 'maximum recursion depth exceeded' not in err.args[0]):
                 raise
-            print("Error:", err);raise
+            print("Error:", err);#raise
         except KeyboardInterrupt:  # <Control>-C
             if not startup:
                 raise

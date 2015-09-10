@@ -1,4 +1,23 @@
 # -*- coding: UTF-8 -*-
+'''
+For the 4-queens puzzle, we start by placing the first queen in the first row and first
+column, thus generating the tuple (0). We then place the second queen in the third
+column of the second row and so generate the tuple (0,2). When we try to place the
+third queen in the third row, we determined that the third queen cannot be placed
+in the third row and so we back up to the partial solution (0,2), remove 2 from the
+tuple and then generate the tuple (0,3), that is, the second queen is placed in the fourth
+column of the second row.
+With the partial solution (0,3), we then try to place the
+third queen in the third row and generate the tuple (0,3,1). Next, with the partial
+solution (0,3,1), when we try to place the fourth queen in the fourth row, it is
+determined that it cannot be done and so the partial solution (0,3,1) ends up in a
+dead end.
+From the partial solution (0,3,1), the backtracking algorithm, in fact, backs up to
+placing the first queen and so removes all the elements of the tuple. The algorithm
+then places the first queen in the second column of the first row and thus generates the
+partial solution (1). In this case, the sequence of partial solution generated is, (1), (1,3),
+(1,3,0), and (1,3,0,2), which represents a solution to the 4-queens puzzle.
+'''
 import functools,re
 PREFIX = ''
 def trace(fn):
@@ -171,3 +190,4 @@ print();print();PrintArray(lastQueen,True);print()
 #    PrintArray(lastQueen,True);    print()
 #    for state in lastQueen.getState():        
 #        print( "column: {1} row: {0} ".format(state[0],state[1],))
+

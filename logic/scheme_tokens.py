@@ -101,7 +101,7 @@ def tokenize_line(line):
             number = False
             if text[0] in _NUMERAL_STARTS:
                 try:
-                    result.append(Number(int(text)))
+                    result.append((int(text)))
                     number = True
                 except ValueError:
                     try:
