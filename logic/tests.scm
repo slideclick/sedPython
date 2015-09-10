@@ -785,7 +785,7 @@ one-through-four
 (defn getAV (self)
 (/ (attr self v)(attr self n)))
 (defn getAVUsingSuper (self)
-(/ (attr self v)((attr self getSuper) self)))
+(/ (attr self v)(getSuper self)))
 (defn setV (self d)
 (set (attr self v) d))
 (defn addValue (self d)
@@ -800,7 +800,7 @@ one-through-four
 ((method c addValue)   10 )
 ((method c getAVUsingSuper)    )
 ))
- ; expect 4
+ ; expect 2.4
 ;getAVUsingSuper will return 4
 (begin
 (define a (SimpleClass))
