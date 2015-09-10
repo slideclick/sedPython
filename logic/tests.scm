@@ -838,7 +838,31 @@ one-through-four
 ((attr d getAVUsingSuper) d   )
 )
   ; expect 3.5
-
+(class UsingMethodAttr baseclass
+(begin 
+(defn _init_ (self v)
+    (begin (set (attr self n)(+ 0 1))(set (attr self v) v)))
+(defn getV (self)
+    (attr self v))
+(defn getAV (self)
+    (/ (attr self v)(attr self n)))
+(defn getAVUsingSuper (self)
+    (/ (attr self v)(getSuper self)))
+(defn setV (self d)
+    (set (attr self v) d))
+(defn addValue (self d)
+    (begin (set (attr self v) (+ ((attr self getV) self) d))
+    (set (attr self n) (addd 2 (attr self n) )))
+)
+))
+ (begin
+(define d (UsingMethodAttr (+ 1 1)))
+((method d addValue)   2 )
+((method d addValue)   10 )
+((method d getAV)    )
+((method d getAVUsingSuper)   )
+)
+  ; expect 1.75
  
  
 
