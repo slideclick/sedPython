@@ -139,7 +139,7 @@ class Frame:
 
     def lookup(self, symbol):
         """Return the value bound to SYMBOL.  Errors if SYMBOL is not found."""
-        if symbol == 'addd':
+        if symbol == 'getsuper':
             pass
         if symbol == 'add_simon':
             pass
@@ -198,7 +198,7 @@ class INSTANCE(Frame):
     #@trace
     def __repr__(self):
         #print('__repr__: ',self.name_)
-        return '{1} object:{0}'.format(super().__repr__(),self._class_,)#self._Type_,) #
+        return '{1} INSTANCE:{0}'.format(super().__repr__(),self._class_,)#self._Type_,) #
     __str__ = __repr__
         
 class LambdaProcedure:
@@ -297,7 +297,7 @@ def do_class_form(vals,env):
     name, super, body = vals
     if str(super).upper() == 'NONE':# DONt  know why None was read into none: esult.append(text.lower())
         super = globalEnv
-    classEnv = Frame(parent = ( env.lookup(super).Construct() if super is not globalEnv else globalEnv) )#,clsName= super if super is not globalEnv else 'TheGlobalEnv' )
+    classEnv = Frame(parent = ( env.lookup(str(super).lower()).Type if super is not globalEnv else globalEnv) )#,clsName= super if super is not globalEnv else 'TheGlobalEnv' )
     env.define(name, SchemeType(class_dict =classEnv,class_name=name,class_parents=super)  )#,clsName =name))) MyClass(classEnv) lambda:Frame(parent = classEnv)
     #env.define(name, PrimitiveProcedure(lambda : Frame(parent = classEnv)))#,clsName =name)))
     scheme_eval(body, classEnv)
@@ -307,8 +307,9 @@ def CreateClass(parent,name=None,super=None):
         return Frame(parent = parent)  
     return  CONSTRACTOR 
 
-class SchemeType:
+class SchemeType(Frame):
     def __init__(self,class_dict,class_name,class_parents):
+        super().__init__(class_dict.parent)
         self.Type = class_dict
         self.name=class_name
         self.bases=class_parents
