@@ -769,7 +769,7 @@ one-through-four
  ; expect 3
  
 
- (defn addd (x y ) (+ 2 x y ))
+
  
  (defn add_simon (x y) (+ x y))
  (add_simon 2 3)
@@ -778,6 +778,7 @@ one-through-four
  
   ((mu (y) (((mu (y) (mu (x) (* y 2))) 3) 0)) 4)
  ; expect 8
+  (defn addd (x y ) (+ 2 x y ))
 (begin
 (class baseclass None (begin (defn getSuper (self)(+ 1 (attr self  n)))(defn addd (x y ) (+ 1 x y ))))
  (define b (baseclass))
@@ -870,10 +871,10 @@ one-through-four
  
  (defn add_simon (x) (+ x 1)) (add_simon 2)
 ; expect 3
-
+ (defn addd (x  ) (+ 2 x  ))
 (class SimpleClass None
 (begin (defn init (self v)
-(set (attr self v) v))
+(set (attr self v)  (addd v) ))
 (defn getV (self)
 (attr self v))
 (defn setV (self d)
@@ -885,7 +886,11 @@ one-through-four
 ((attr a setV) a (add_simon 38 ))
 ((attr a getV) a)
 )
+
  ; expect 39
+
+
+
  (exit) 
   ;; fact code isn't tail , so it can't be optimization
   ;; (require racket/trace) (trace factnew)

@@ -194,7 +194,7 @@ class INSTANCE(Frame):
     #@trace
     def __repr__(self):
         #print('__repr__: ',self.name_)
-        return '{0} object:{1}'.format(self._class_,self._Type_,) #super().__repr__())
+        return '{1} object:{0}'.format(super().__repr__(),self._class_,)#self._Type_,) #
     __str__ = __repr__
         
 class LambdaProcedure:
@@ -222,6 +222,9 @@ class BoundMethod(LambdaProcedure):
     def __init__(self, formals, body, env,instance):
         super().__init__( formals, body, env)
         self.instance= instance
+    def __repr__(self):
+        return 'BoundMethod: {0} :{1}'.format(self.instance._class_,super().__str__(),)
+    __str__ = __repr__
 
 
 class MuProcedure:
