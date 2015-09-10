@@ -767,6 +767,10 @@ one-through-four
 (add_simon 2)
 
  ; expect 3
+ 
+
+ (defn addd (x y ) (+ 2 x y ))
+ 
  (defn add_simon (x y) (+ x y))
  (add_simon 2 3)
  ((lambda (y) (((lambda (y) (lambda (x) (* y 2))) 3) 0)) 4)
@@ -851,7 +855,7 @@ one-through-four
 (defn setV (self d)
     (set (attr self v) d))
 (defn addValue (self d)
-    (begin (set (attr self v) (+ ((attr self getV) self) d))
+    (begin (set (attr self v) (+ (getV self) d))
     (set (attr self n) (addd 2 (attr self n) )))
 )
 ))
