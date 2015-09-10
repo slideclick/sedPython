@@ -5,7 +5,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{72f010a8-5b03-4a97-bc31-44ad008b5841}</ProjectGuid>
     <ProjectHome />
-    <StartupFile>scheme.py</StartupFile>
+    <StartupFile>testOOSpy.py</StartupFile>
     <SearchPath />
     <WorkingDirectory>.</WorkingDirectory>
     <OutputPath>.</OutputPath>
@@ -32,6 +32,7 @@
     <Compile Include="scheme_reader.py" />
     <Compile Include="scheme_test.py" />
     <Compile Include="scheme_tokens.py" />
+    <Compile Include="testOOSpy.py" />
     <Compile Include="ucb.py" />
   </ItemGroup>
   <ItemGroup>

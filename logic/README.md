@@ -18,6 +18,7 @@ a.addValue(2)
 a.addValue(3)
 a.addValue(10)
 (a.getAVUsingSuper() )
+
 ------------------------
 (class UsingMethodAttr baseclass
 (begin 

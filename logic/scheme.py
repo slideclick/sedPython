@@ -335,23 +335,7 @@ class SchemeType:
     def __str__(self):
         return 'SchemeType:{0},bases: {1}'.format(self.name,self.bases)
 ############################
-class Tsomeclass:
-    def getSuper(self):
-        return 1+ self.n
-class TSimpleClass(Tsomeclass):
-    def __init__(self,v):
-        self.n=0
-        self.v=v
-    def addValue(self,d):
-        self.v += d
-        self.n += 1
-    def getAVUsingSuper(self):
-        return self.v / self.getSuper()
-a=TSimpleClass(0)
-a.addValue(2)
-a.addValue(3)
-a.addValue(10)
-(a.getAVUsingSuper() )
+
 ######################################
     
 def lhsEval(lhs, env):
