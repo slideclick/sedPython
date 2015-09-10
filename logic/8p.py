@@ -34,10 +34,10 @@ def log(message):
     if type(message) is not str:
         message = str(message)
     print(PREFIX + re.sub('\n', '\n' + PREFIX, message))
-SIZE = 2
+SIZE = 4
 def PrintArray(lastQueen,firstcall = False,moveNumber=0):
     if firstcall:
-        [print(i,end='') for i  in range(1,SIZE+1)]
+        [print(i,end='') for i  in range(SIZE)]
     if type(lastQueen.neighbour) is not NullQueen:
         PrintArray(lastQueen.neighbour)
     print()
@@ -154,7 +154,7 @@ for i in range(1,SIZE+1):
   lastQueen = Queen()
   lastQueen.initialColumn(i, neighbour)
   neighbour = lastQueen
-  if not lastQueen.findSolution():
+  if not lastQueen.findSolution():# when adding then finding
       print('no solution\n')
 
 print();print();PrintArray(lastQueen,True);print()

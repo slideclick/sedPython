@@ -765,7 +765,10 @@ one-through-four
 
 (defn add_simon (x) (+ x 1)) 
 (add_simon 2)
+
  ; expect 3
+ (defn add_simon (x y) (+ x y))
+ (add_simon 2 3)
  ((lambda (y) (((lambda (y) (lambda (x) (* y 2))) 3) 0)) 4)
  ; expect 6
  
